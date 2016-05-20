@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect">
+<body>
+
+<th:block layout:fragment="pagination">
+    <div class="row">
+
+
+        <div class="col-md-12 text-center">
+            <div class='pagination pagination-centered'>
+                <ul class="pagination">
+                    <li th:class="${paginationDTO.firstPage ==null}? 'disabled' : ''">
+                        <span th:if='${paginationDTO.firstPage == null}'>First</span>
+                        <a th:if='${paginationDTO.firstPage !=null}'
+                           th:href="@{${paginationDTO.firstPage.url}}">First</a>
+                    </li>
+                    <li th:class="${paginationDTO.prevPage ==null}? 'disabled' : ''">
+                        <span th:if='${paginationDTO.prevPage == null}'>Prev</span>
+                        <a th:if='${paginationDTO.prevPage !=null}'
+                           th:href="@{${paginationDTO.prevPage.url}}">Prev</a>
+                    </li>
+                    <li th:each="pageDTO : ${paginationDTO.pages}"
+                        th:class="${pageDTO.pageNo==paginationDTO.currentPage ? 'active' : '' }">
+                        <span th:if='${pageDTO.pageNo==paginationDTO.currentPage}' th:text='${pageDTO.pageNo}'>1</span>
+                        <a th:if='${pageDTO.pageNo!=paginationDTO.currentPage}'
+                           th:href="@{${pageDTO.url }}">
+                            <span th:text='${pageDTO.pageNo}'>1</span>
+                        </a>
+                    </li>
+                    <li th:class="${paginationDTO.nextPage ==null}? 'disabled' : ''">
+                        <span th:if='${paginationDTO.nextPage == null}'>Next</span>
+                        <a th:if='${paginationDTO.nextPage !=null}'
+                           th:href="@{${paginationDTO.nextPage.url}}">Next</a>
+                    </li>
+                    <li th:class="${paginationDTO.lastPage ==null}? 'disabled' : ''">
+                        <span th:if='${paginationDTO.lastPage == null}'>Last</span>
+                        <a th:if='${paginationDTO.lastPage !=null}'
+                           th:href="@{${paginationDTO.lastPage.url}}">Last</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+</body>
+</html>

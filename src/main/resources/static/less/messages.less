@@ -1,0 +1,18 @@
+.message-type(@message-type, @icon-color) {
+
+  &.message-@{message-type} {
+    color: black;
+    font-size: 0.7em;
+    font-size: 1rem;
+
+    > .fa {
+      color: @icon-color;
+    }
+  }
+}
+
+.message {
+  margin-top: 5px;
+  .message-type(success, @success-message-color);
+  .message-type(error, @error-message-color);
+}

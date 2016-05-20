@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<body>
+<th:block layout:fragment="menu">
+    <nav class="navbar navbar-default navbar-fixed-top visible-xs-block">
+        <!-- We use the fluid option here to avoid overriding the fixed width of a normal container within the narrow content columns. -->
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-6">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">School | Survey </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                <th:block layout:include="fragments/menu :: menuItems">Menu</th:block>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+    <div class="sidebar hidden-xs">
+        <nav class="nav nav-sidebar navbar-default">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">School | Survey<!--<img th:src="'/images/logo-light.png'"/>--></a>
+            </div>
+            <th:block layout:include="fragments/menu :: menuItems">Menu</th:block>
+        </nav>
+    </div>
+</th:block>
+
+<th:block layout:fragment="menuItems">
+    <ul class="nav">
+        <!--Another sec possibility would be: -->
+        <!--<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users}">Users</a></li>-->
+        <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/user/list}">
+                <span class="fa fa-fw fa-adjust"></span><span th:text="#{menu.users}">Users</span>
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/parent/new}">
+                <span class="fa fa-fw fa-gear"></span><span>Parent Survey</span>
+            </a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/parent/list}">
+                <span class="fa fa-fw fa-adjust"></span><span >Evaluation</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="document.getElementById('logoutform').submit();return false;">
+                <span class="fa fa-fw fa-sign-out"></span><span th:text="#{menu.logout}">Logout</span>
+            </a>
+
+            <form th:action="@{/logout}" method="post" id="logoutform">
+            </form>
+        </li>
+    </ul>
+    <div class="footer">school|survey <span th:text="${info.version}"></span> (<span th:text="${info.date}"></span>)
+    </div>
+</th:block>
+</body>
+</html>

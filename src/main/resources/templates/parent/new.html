@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      layout:decorator="layout/main">
+
+<body layout:fragment="content">
+<!--@thymesVar id="userDTO" type="at.teamecho.dto.UserDTO"-->
+<form action="#" th:action="@{/parent/new}" th:object="${parentDTO}" method="post">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-heading">Parent Survey</div>
+            <div class="form-group required" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" th:value="*{name}" th:field="*{name}" id="name"
+                       autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name Error</span>
+            </div>
+
+            <div class="form-group required" th:classappend="${#fields.hasErrors('phoneNo')}? 'has-error'">
+                <label for="phoneNo">Phone No.</label>
+                <input class="form-control" type="text" th:value="*{phoneNo}" th:field="*{phoneNo}" id="phoneNo"
+                       autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('phoneNo')}"
+                      th:errors="*{phoneNo}">name Error</span>
+            </div>
+
+            <div class="form-group required" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" th:value="*{email}" th:field="*{email}" id="email"
+                       autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('email')}"
+                      th:errors="*{email}">Email Error</span>
+            </div>
+
+            <div class="form-group required" th:classappend="${#fields.hasErrors('address')}? 'has-error'">
+                <label for="address">Address</label>
+                <input class="form-control" type="text" th:value="*{address}" th:field="*{address}" id="address"
+                       autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('address')}"
+                      th:errors="*{address}">Address Error</span>
+            </div>
+
+            <div class="form-group required" th:classappend="${#fields.hasErrors('address')}? 'has-error'">
+                <label for="noOfChildren">No of Children</label>
+                <input class="form-control" type="text" th:value="*{noOfChildren}" th:field="*{noOfChildren}"
+                       id="noOfChildren"
+                       autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('noOfChildren')}"
+                      th:errors="*{noOfChildren}">No of Children Error</span>
+            </div>
+
+            <div>
+                <div class="form-group required"
+                     th:classappend="${#fields.hasErrors('standard')}? 'has-error'">
+                    <label for="standard">Standard</label>
+                    <input class="form-control" type="text" th:value="*{standard}"
+                           th:field="*{standard}"
+                           id="standard"
+                           autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('standard')}"
+                      th:errors="*{standard}">Standard Error</span>
+                </div>
+                <div class="form-group required"
+                     th:classappend="${#fields.hasErrors('schoolName')}? 'has-error'">
+                    <label for="schoolName">School Name</label>
+                    <input class="form-control" type="text" th:value="*{schoolName}"
+                           th:field="*{schoolName}"
+                           id="schoolName"
+                           autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('schoolName')}"
+                      th:errors="*{schoolName}">schoolName Error</span>
+                </div>
+            </div>
+            <div>
+                <input type="button" id="addButton" value="Add"/>
+            </div>
+            <div>
+                <table class="table table-bordered table-condensed">
+                    <tr id="testLoad"></tr>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            <!--@thymesVar id="userDTOs" type="java.util.List<at.teamecho.dto.UserDTO>"-->
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <div class="form-heading"><span th:text="*{questionDTO.name}"></span></div>
+                </tr>
+
+                <tr th:each="optionDTO : ${parentDTO.questionDTO.optionDTO}">
+                    <td><input type="checkbox" th:rel="${optionDTO.id}" th:name="${'option'+ optionDTO.id}"/></td>
+                    <td>
+                        <span th:text="${optionDTO.name}"></span>
+
+                    </td>
+                    <td style="display: none;">
+                        <div id='TextBoxesGroup'>
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-9 col-lg-3">
+            <div class="row row-offset">
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary btn-block" value="save" name="action"
+                            th:text="#{save.title}">save
+                    </button>
+                </div>
+                <div class="col-sm-6">
+                    <a th:href="@{/user/list}" class="btn btn-default btn-block" th:text="#{cancel.title}">cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+</body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/users.js}"></script>
+
+    <script>
+        $(document).ready(function () {
+            var counter = 0;
+            $('input:checkbox').click(function () {
+                var optionId = ($(this).attr('rel'));
+                var test = $("input[name='option" + optionId + "']:checked").length;
+
+                if (test == 1) {
+                    counter++;
+                    $("#TextBoxesGroup").after('<div style ="display:none;"  id="question_' + optionId + '"><input class="form-control" type="text" name="questionDTO.optionPriority[' + optionId + ']"  value=" ' + counter + '"/></div>');
+
+
+                } else {
+                    counter--;
+                    $("#question_" + optionId).remove();
+
+                }
+
+            });
+
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var counters = 0;
+            $("#addButton").click(function () {
+                counters++;
+
+                var standard = $('#standard').val();
+                var schoolName = $('#schoolName').val();
+                $('#testLoad').after('<tr id="childrenDTOs_' + counters + '"><td><input type="text" readonly="readonly" style="border: 0px none;background: transparent;"  name="childrenDTOs[' + counters + '].standard" value="' + standard + '" /></td> ' +
+                        '<td><input type="text" readonly="readonly"  style="border: 0px none;background: transparent;" name="childrenDTOs[' + counters + '].schoolName" value="' + schoolName + '" /></td><td><input id="remove" type="button" value="Remove"/></td></tr>');
+
+            })
+
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('input[type ="button"]').click(function () {
+                var row = $(this).closest('tr');
+                row.remove();
+            })
+        });
+    </script>
+
+</th:block>
+</html>

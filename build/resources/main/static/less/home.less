@@ -1,0 +1,79 @@
+
+.row-logo {
+  margin-bottom: 25px;
+
+  @media (min-width: @screen-lg-min) {
+    margin-bottom: 50px;
+  }
+
+  @media (min-width: @screen-xl-min) {
+    margin-bottom: 100px;
+  }
+
+  .col-logo {
+    text-align: center;
+    .logo {
+      max-width: 500px;
+      width: 90%;
+    }
+    .welcome-text {
+      color: @brand-primary;
+    }
+    .survey-block {
+      display: inline-block;
+      max-width: 350px;
+      width: 90%;
+      margin-top: 20px;
+      .help-block {
+        text-align: left;
+        .icon {
+          position: absolute;
+          margin-top: 3px;
+          margin-left: 5px;
+          color: @brand-warning;
+          font-size: 1.5em;
+          font-size: 1.5rem;
+        }
+        .help-text {
+          padding-left: 30px;
+        }
+      }
+    }
+  }
+}
+
+.row-landing-items {
+
+  @media (min-width: @screen-md-min) {
+    padding: 0 50px;
+  }
+  .landing-item {
+    text-align: center;
+    margin-bottom: 40px;
+
+    .icon {
+      border-radius: 2em;
+      font-size: 2em;
+      border-radius: 2rem;
+      font-size: 2rem;
+      background: @brand-primary;
+      padding: 1rem;
+      color: @btn-primary-color;
+    }
+
+    .landing-item-title {
+      margin: 0 auto;
+      width: 90%;
+      color: @brand-primary;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    .landing-item-content {
+      margin: 0 auto;
+      width: 90%;
+      text-align: justify;
+    }
+  }
+}

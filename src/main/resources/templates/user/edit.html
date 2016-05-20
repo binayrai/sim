@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      layout:decorator="layout/main">
+
+<body layout:fragment="content">
+<!--@thymesVar id="userDTO" type="at.teamecho.dto.UserDTO"-->
+<form action="#" th:action="@{/user/edit}" th:object="${userDTO}" method="post">
+    <input type="hidden" th:value="*{id}" th:field="*{id}"/>
+
+    <!-- the following 2 dummy inputs disable autocomplete - necessary for some browser -->
+    <input type="text" style="display:none"/>
+    <input type="password" style="display:none"/>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-heading" th:text="#{user.new.create}">Neues User anlegen</div>
+            <div class="form-group required" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
+                <label for="username">Username</label>
+                <input class="form-control" type="text" th:value="*{username}" th:field="*{username}" id="username"
+                       autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('username')}"
+                      th:errors="*{username}">Username Error</span>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="passwordCheckBox">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="changePassword" th:field="*{changePassword}"
+                           th:text="#{user.change.password}"/>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="passwordChecked">
+        <div class="col-md-6">
+            <div class="form-group required" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+                <label for="password" th:text="#{user.password}">Password</label>
+                <input class="form-control" type="password" th:value="*{password}" th:field="*{password}"
+                       id="password" autocomplete="off"/>
+                <span class="help-block" th:if="${#fields.hasErrors('password')}"
+                      th:errors="*{password}">Password Error</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group required" th:classappend="${#fields.hasErrors('roles')}? 'has-error'">
+                <label for="roles" th:text="#{user.role}">Role</label>
+                <select class="form-control" th:field="*{roles}" id="roles" multiple="multiple">
+                    <option th:each="role : ${T(com.elite.dto.enums.UserRole).values()}" th:value="${role}"
+                            th:text="${role}"
+                            th:selected="${role == T(com.elite.dto.enums.UserRole)}">
+
+                    </option>
+                </select>
+                <span class="help-block" th:if="${#fields.hasErrors('roles')}"
+                      th:errors="*{roles}">Role Error</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group required">
+                <input type="checkbox" th:field="*{locked}" id="locked" th:text="#{user.locked}"/>
+
+            </div>
+            <div class="form-group required" id="lockReason"
+                 th:classappend="${#fields.hasErrors('lockReason')}? 'has-error'">
+                <label for="lockReason" th:text="#{user.lock.reason}">Lock Reason</label>
+                <textarea class="form-control" id="lockReason" type="text" th:field="*{lockReason}">
+
+                </textarea>
+                <span class="help-block" th:if="${#fields.hasErrors('lockReason')}"
+                      th:errors="*{lockReason}">Lock Reason error</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-9 col-lg-3">
+            <div class="row row-offset">
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-primary btn-block" value="save" name="action"
+                            th:text="#{save.title}">save
+                    </button>
+                </div>
+                <div class="col-sm-6">
+                    <a th:href="@{/user/list}" class="btn btn-default btn-block" th:text="#{cancel.title}">cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+</body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/users.js}"></script>
+</th:block>
+</html>

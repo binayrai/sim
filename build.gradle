@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/libs-release" }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+jar {
+    baseName = 'teamecho'
+    version = '0.1.0'
+}
+
+war {
+    archiveName = 'ROOT.war'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-release" }
+}
+
+configurations {
+    if (System.getProperty('war') != null) { // necessary, otherwise Application.java is not starting in IDEA (IDEA bug)
+        providedRuntime
+    }
+}
+
+dependencies {
+    if (System.getProperty('war') != null) { // necessary, otherwise Application.java is not starting in IDEA (IDEA bug)
+        providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    }
+    compile("org.springframework.boot:spring-boot-starter-web")
+
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-mail")
+
+    compile('net.sf.opencsv:opencsv:2.3')
+
+    compile("com.h2database:h2")
+
+    compile("org.thymeleaf.extras:thymeleaf-extras-springsecurity3:2.1.1.RELEASE");
+
+    // e.g. org.apache.commons.lang.time.FastDateFormat -> but java8 has java.time.format.DateTimeFormatter
+    compile('commons-lang:commons-lang:2.4')
+
+    runtime('mysql:mysql-connector-java:5.1.26')
+
+    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.subethamail:subethasmtp:3.1.7")
+
+    // webjars
+    compile("org.webjars:jquery:2.1.3")
+    compile 'org.webjars:font-awesome:4.2.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect">
+<body>
+<th:block layout:fragment="messages">
+    <div class="message message-success" th:if="${message != null}">
+        <span class="fa fa-info-circle"></span>
+        <span th:text="${message}"></span>
+    </div>
+
+    <div class="message message-error" th:if="${errorMessage != null}">
+        <span class="fa fa-info-circle"></span>
+        <span th:text="${errorMessage}"></span>
+    </div>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,85 @@
+body.login {
+  padding: 50px;
+  background: url(@login-background-image-mobile) center bottom no-repeat;
+
+  @media (min-width: @screen-md-min) {
+    background: url(@login-background-image) center bottom no-repeat;
+  }
+
+  .logo-container {
+    text-align: center;
+    .logo {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+
+  @media (max-width: @screen-sm-max) {
+    .logo-container {
+      padding-bottom: 20px;
+      border-bottom: 1px solid @seperator-color;
+      margin-bottom: 20px;
+    }
+  }
+
+  @media (min-width: @screen-md-min) {
+    padding: 0;
+
+    .logo-container {
+      width: 100% - @login-container-width-md;
+      vertical-align: middle;
+      padding-right: 100px;
+      height: 100%;
+      position: relative;
+      .logo {
+        max-width: @logo-max-width;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .content-container {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+      height: 60%;
+      border-left: 1px solid @seperator-color;
+      width: @login-container-width-md;
+      > * {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 400px;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  @media (min-width: @screen-lg-min) {
+    .logo-container {
+      width: 100% - @login-container-width-lg;
+    }
+
+    .content-container {
+      width: @login-container-width-lg;
+    }
+  }
+
+  .footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 150px;
+    background: url("../images/footer-login.png") right bottom no-repeat;
+  }
+}
+
+@media (max-height: 500px) {
+  .footer {
+    display: none;
+  }
+}

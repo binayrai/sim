@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      layout:decorator="layout/main">
+<body>
+<div layout:fragment="content">
+
+    <div>
+        <form class="form" action="#" th:action="@{/user/list/1}" th:object="${userSearchRequest}" method="get">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name" th:text="#{user.username}">User Name</label>
+                        <input class="form-control" type="text" th:value="*{name}" th:field="*{name}" id="name"/>
+                    </div>
+                </div>
+            </div>
+
+           <!-- <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label th:text="#{user.role}">Role</label>
+
+                        <div class="roles">
+                            <th:block th:each="role : ${T(com.elite.dto.enums.UserRole).values()}">
+                                <div class="col-md-2">
+                                    <input class="rolecheckbox" type="checkbox" th:id="${role}" th:field="*{roles}"
+                                           th:value="${role}"/>
+                                    <label th:for="${role}" th:text="${role}"></label>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="enabled">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="enabled" th:text="#{active}">Active</label>
+                        <select class="form-control" th:field="*{enabled}" id="enabled">
+                            <option th:selected="${enabled == -1}" value="-1">-&#45;&#45;&#45;&#45;</option>
+                            <option th:selected="${enabled == 1}" value="1" th:text="#{true}"/>
+                            <option th:selected="${enabled == 0}" value="0" th:text="#{false}"/>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" id="locked">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="locked" th:text="#{user.locked}">Locked</label>
+                        <select class="form-control" th:field="*{locked}" id="locked">
+                            <option th:selected="${locked == -1}" value="-1">-&#45;&#45;&#45;&#45;</option>
+                            <option th:selected="${locked == 1}" value="1" th:text="#{true}"/>
+                            <option th:selected="${locked == 0}" value="0" th:text="#{false}"/>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+            -->
+            <div class="row">
+
+                <div class="col-sm-9 col-lg-3">
+                    <div class="row row-offset">
+                        <div class="col-sm-6 ">
+                            <button type="submit" class="btn btn-primary btn-block" value="search" name="action"
+                                    th:text="#{search.title}">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <a th:href="@{/user/new}" class="btn btn-primary"><span
+                            class="fa fa-plus-circle fa-fw"></span><span th:text="#{user.new.create}">Neuen Benutzer anlegen</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--@thymesVar id="userDTOs" type="java.util.List<at.teamecho.dto.UserDTO>"-->
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th th:text="#{user.username}">
+                    #{user.username}
+                </th>
+                <th th:text="#{user.role}">
+                    #{user.role}
+                </th>
+
+                <th th:text="#{active}">
+                    #{common.active}
+                </th>
+                <th th:text="#{user.locked}">
+                    #{user.locked}
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            <tr th:each="userDTO : ${userDTOs}">
+                <td>
+                    <span th:text="${userDTO.username}"></span>
+                    <i th:if="${userDTO.invalid}" class="fa fa-exclamation-triangle user-invalid"
+                       th:title="#{team.invalid.user}"></i>
+                </td>
+                <td th:text="${userDTO.roles}"></td>
+
+
+                <td>
+                    <th:block th:if="${userDTO.enabled}" th:text="#{true}"></th:block>
+                    <th:block th:if="${!userDTO.enabled}" th:text="#{false}"></th:block>
+                </td>
+                <td>
+                    <th:block th:if="${userDTO.locked}" th:text="#{true}"></th:block>
+                    <th:block th:if="${!userDTO.locked}" th:text="#{false}"></th:block>
+                </td>
+
+
+                <td>
+                    <a class="btn btn-default" th:href="@{/user/edit(id=${userDTO.id})}">
+                        <span class="fa fa-pencil"></span>
+                    </a>
+
+                    <elite:confirmbutton class="btn btn-default prevent-click-bubbling"
+                                            teamecho:dialog-title="#{confirm.delete.title}"
+                                            teamecho:dialog-message="#{user.delete.confirm(${userDTO.username})}"
+                                            teamecho:action-text="#{delete.title}"
+                                            teamecho:action-href="@{/user/delete(id=${userDTO.id})}">
+                        <span class="fa fa-trash"></span>
+                    </elite:confirmbutton>
+
+                </td>
+            </tr>
+        </table>
+        <div>
+            <span th:text="#{records.found(${paginationDTO.totalRows})}">Records found!</span>
+        </div>
+        <th:block layout:include="fragments/pagination :: pagination">Pagination</th:block>
+
+    </div>
+</div>
+<div layout:fragment="dialogs">
+    <th:block layout:include="fragments/dialogs :: confirm-dialog">Confirm dialog</th:block>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/userlist.js}"></script>
+</th:block>
+</html>

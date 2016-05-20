@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect"
+      layout:decorator="layout/main">
+<body>
+<div layout:fragment="content">
+
+    <div>
+        <form class="form" action="#" th:action="@{/parent/list/1}" th:object="${parentSearchRequest}" method="get">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Parent Name</label>
+                        <input class="form-control" type="text" th:value="*{name}" th:field="*{name}" id="name"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-sm-9 col-lg-3">
+                    <div class="row row-offset">
+                        <div class="col-sm-6 ">
+                            <button type="submit" class="btn btn-primary btn-block" value="search" name="action"
+                                    th:text="#{search.title}">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <!--@thymesVar id="userDTOs" type="java.util.List<at.teamecho.dto.UserDTO>"-->
+        <table class="table table-bordered table-condensed">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Phone No
+                </th>
+
+                <th>
+                    Email
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    No of Children
+                </th>
+                <th></th>
+
+            </tr>
+            <tr th:each="parentDto : ${parentDTOS}">
+                <td>
+                    <span th:text="${parentDto.name}"></span>
+
+                </td>
+                <td>
+                    <span th:text="${parentDto.phoneNo}"></span>
+
+                </td>
+                <td>
+                    <span th:text="${parentDto.email}"></span>
+
+                </td>
+                <td>
+                    <span th:text="${parentDto.address}"></span>
+
+                </td>
+                <td>
+                    <span th:text="${parentDto.noOfChildren}"></span>
+
+                </td>
+
+
+                <td>
+                    <a class="btn btn-default" th:href="@{/parent/view(id=${parentDto.id})}">
+                        <span class="fa fa-pencil"></span>
+                    </a>
+
+                </td>
+            </tr>
+        </table>
+        <div>
+            <span th:text="#{records.found(${paginationDTO.totalRows})}">Records found!</span>
+        </div>
+        <th:block layout:include="fragments/pagination :: pagination">Pagination</th:block>
+
+    </div>
+</div>
+
+</body>
+
+</html>

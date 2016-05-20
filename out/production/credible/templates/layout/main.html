@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>team|echo</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <link th:href="@{/css/teamecho.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/4.2.0/css/font-awesome.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<th:block layout:include="fragments/menu :: menu">Menu</th:block>
+<div class="main-content" th:classappend="${message != null or errorMessage != null}? 'has-message'">
+    <div class="header"><span th:text="#{${title}}" th:if="${title}"></span>
+        <th:block layout:include="fragments/messages :: messages">Messages</th:block>
+    </div>
+    <div class="content">
+        <div layout:fragment="content">Content</div>
+    </div>
+</div>
+
+<div layout:fragment="dialogs"></div>
+
+<script th:src="@{/webjars/jquery/2.1.3/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/js/teamecho.js}"></script>
+
+<div layout:fragment="script"></div>
+</body>
+</html>

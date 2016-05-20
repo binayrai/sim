@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org/extras/dialect">
+<head lang="en">
+    <title></title>
+</head>
+<body>
+<th:block layout:fragment="confirm-dialog">
+    <div class="modal fade confirm" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="confirm-dialog-label">Dialog Title</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-danger ok">
+                        OK
+                    </a>
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal"
+                            th:text="#{cancel.title}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>
